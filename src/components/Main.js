@@ -9,6 +9,7 @@ import Contact from "./Contact";
 import Header from "./Header";
 import Footer from "./Footer";
 import Menu from "./Menu.js";
+import About from "./About";
 import Home from "./Home";
 
 class Main extends Component {
@@ -54,6 +55,9 @@ class Main extends Component {
 
         <Switch>
           <Route path="/home" component={HomePage} />
+          <Route path="/aboutus">
+            <About leaders={this.state.leaders} />
+          </Route>
           <Route
             exact
             path="/menu"
