@@ -7,7 +7,6 @@ import {
   Collapse,
   NavItem,
   Jumbotron,
-  Col,
   Button,
   Modal,
   ModalBody,
