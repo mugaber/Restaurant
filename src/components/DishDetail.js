@@ -37,6 +37,16 @@ class CommentForm extends Component {
     });
   }
 
+  handleSubmit(values) {
+    this.toggleModal();
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
+  }
+
   render() {
     return (
       <>
@@ -45,7 +55,7 @@ class CommentForm extends Component {
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
           <ModalBody>
             <div className="col-12 col-md-9">
-              <LocalForm>
+              <LocalForm onSubmit={values => this.handleSubmit(values)}>
                 <Row className="form-group">
                   <Label htmlFor="rating">Rating</Label>
                   <Control.select
@@ -56,6 +66,9 @@ class CommentForm extends Component {
                   >
                     <option>1</option>
                     <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
                   </Control.select>
                 </Row>
                 <Row className="form-group">
@@ -144,7 +157,10 @@ class RenderComments extends Component {
         <div>
           <h4>Comments</h4>
           <ul className="list-unstyled">{this.renderComment(comments)}</ul>
-          <CommentForm />
+          <CommentForm
+            addComment={this.props.addComment}
+            dishId={this.props.dishId}
+          />
         </div>
       );
     } else {
@@ -175,7 +191,11 @@ class DishDetail extends Component {
               <RenderDish dish={this.props.dish} />
             </div>
             <div className="col-12 col-md-5 m-1">
-              <RenderComments comments={this.props.comments} />
+              <RenderComments
+                comments={this.props.comments}
+                addComment={this.props.addComment}
+                dishId={this.props.dish.id}
+              />
             </div>
           </div>
         </div>
