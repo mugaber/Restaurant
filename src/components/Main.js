@@ -9,7 +9,7 @@ import Menu from "./Menu.js";
 import About from "./About";
 import Home from "./Home";
 
-const mapStoreToProsp = state => {
+const mapStoreToProps = state => {
   return {
     dishes: state.dishes,
     promotions: state.promotions,
@@ -73,4 +73,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(mapStoreToProsp)(Main));
+export default withRouter(connect(mapStoreToProps)(Main));
