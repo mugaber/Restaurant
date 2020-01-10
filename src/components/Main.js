@@ -1,4 +1,5 @@
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import { addComment } from "../redux/ActionCreators";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DishDetail from "./DishDetail";
@@ -8,6 +9,11 @@ import Footer from "./Footer";
 import Menu from "./Menu.js";
 import About from "./About";
 import Home from "./Home";
+
+const mapDispatchToProps = dispatch => ({
+  addComment: (dishId, rating, author, comment) =>
+    dispatch(addComment(dishId, rating, author, comment))
+});
 
 const mapStoreToProps = state => {
   return {
@@ -19,7 +25,6 @@ const mapStoreToProps = state => {
 };
 
 class Main extends Component {
-
   render() {
     const HomePage = () => {
       return (
@@ -42,6 +47,7 @@ class Main extends Component {
           comments={this.props.comments.filter(
             comment => comment.dishId === parseInt(match.params.dishId, 10)
           )}
+          addComment={this.props.addComment}
         />
       );
     };
@@ -73,4 +79,4 @@ class Main extends Component {
   }
 }
 
-export default withRouter(connect(mapStoreToProps)(Main));
+export default withRouter(connect(mapStoreToProps, mapDispatchToProps)(Main));
