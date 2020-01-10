@@ -106,24 +106,19 @@ class CommentForm extends Component {
   }
 }
 
-class DishDetail extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+function RenderDish({ dish }) {
+  return (
+    <Card>
+      <CardImg top src={dish.image} alt={dish.name} />
+      <CardBody>
+        <CardTitle>{dish.name}</CardTitle>
+        <CardText>{dish.description}</CardText>
+      </CardBody>
+    </Card>
+  );
+}
 
-  renderDish(dish) {
-    return (
-      <Card>
-        <CardImg top src={dish.image} alt={dish.name} />
-        <CardBody>
-          <CardTitle>{dish.name}</CardTitle>
-          <CardText>{dish.description}</CardText>
-        </CardBody>
-      </Card>
-    );
-  }
-
+class RenderComments extends Component {
   renderComment(comments) {
     return comments.map(comment => {
       return (
@@ -142,7 +137,8 @@ class DishDetail extends Component {
     });
   }
 
-  renderComments(comments) {
+  render() {
+    const comments = this.props.comments;
     if (comments) {
       return (
         <div>
@@ -155,7 +151,9 @@ class DishDetail extends Component {
       return <div></div>;
     }
   }
+}
 
+class DishDetail extends Component {
   render() {
     if (this.props.dish) {
       return (
@@ -174,10 +172,10 @@ class DishDetail extends Component {
           </div>
           <div className="row">
             <div className="col-12 col-md-5 m-1">
-              {this.renderDish(this.props.dish)}
+              <RenderDish dish={this.props.dish} />
             </div>
             <div className="col-12 col-md-5 m-1">
-              {this.renderComments(this.props.comments)}
+              <RenderComments comments={this.props.comments} />
             </div>
           </div>
         </div>
