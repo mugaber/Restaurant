@@ -1,5 +1,5 @@
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import { addComment } from "../redux/ActionCreators";
+import { addComment, fetchDishes } from "../redux/ActionCreators";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DishDetail from "./DishDetail";
@@ -11,9 +11,19 @@ import About from "./About";
 import Home from "./Home";
 
 const mapDispatchToProps = dispatch => ({
-  addComment: (dishId, rating, author, comment) =>
-    dispatch(addComment(dishId, rating, author, comment))
+  //
+  addComment: (dishId, rating, author, comment) => {
+    dispatch(addComment(dishId, rating, author, comment));
+  },
+  // fetchDishes is using thunk to act as a middle ware and now it
+  // will be available as a props to the main component
+  fetchDishes: () => {
+    dispatch(fetchDishes());
+  }
 });
+
+// now dishes state will be availabe as an object with three properties
+// dishes, is loading and error message
 
 const mapStoreToProps = state => {
   return {
@@ -25,11 +35,21 @@ const mapStoreToProps = state => {
 };
 
 class Main extends Component {
+  //
+  // add a life cyle to fetch the dishes when ever the main component
+  // will be mounsted to the UI view
+  componentDidMount() {
+    this.props.fetchDishes();
+  }
+
   render() {
     const HomePage = () => {
       return (
         <Home
-          dish={this.props.dishes.filter(dish => dish.featured)[0]}
+          // dishes will have a property dishes that have the dishes
+          dish={this.props.dishes.dishes.filter(dish => dish.featured)[0]}
+          dishesLoading={this.props.dishes.loading}
+          dishesErrMess={this.props.dishes.errMess}
           promotion={this.props.promotions.filter(promo => promo.featured)[0]}
           leader={this.props.leaders.filter(leader => leader.featured)[0]}
         />
@@ -40,10 +60,12 @@ class Main extends Component {
       return (
         <DishDetail
           dish={
-            this.props.dishes.filter(
+            this.props.dishes.dishes.filter(
               dish => dish.id === parseInt(match.params.dishId, 10)
             )[0]
           }
+          loading={this.props.dishes.loading}
+          errMess={this.props.dishes.errMess}
           comments={this.props.comments.filter(
             comment => comment.dishId === parseInt(match.params.dishId, 10)
           )}

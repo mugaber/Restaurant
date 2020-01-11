@@ -1,6 +1,7 @@
-import React, { Component } from "react";
 import { Control, LocalForm, Errors } from "react-redux-form";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import { Loading } from "./Loading";
 import {
   Row,
   Button,
@@ -156,9 +157,7 @@ class RenderComments extends Component {
       return (
         <div>
           <h4>Comments</h4>
-          <ul className="list-unstyled">
-            {this.renderComment(comments)}
-          </ul>
+          <ul className="list-unstyled">{this.renderComment(comments)}</ul>
           <CommentForm
             addComment={this.props.addComment}
             dishId={this.props.dishId}
@@ -171,9 +170,29 @@ class RenderComments extends Component {
   }
 }
 
+// to update the dishDetail component to make use of the loading
+// and error message that have been sent from the main component
+// and render different views based on the condition of the state
+
 class DishDetail extends Component {
   render() {
-    if (this.props.dish) {
+    if (this.props.loading) {
+      return (
+        <div className="container">
+          <div className="row">
+            <Loading />
+          </div>
+        </div>
+      );
+    } else if (this.props.errMess) {
+      return (
+        <div className="container">
+          <div className="row">
+            <h2>{this.props.errMess}</h2>
+          </div>
+        </div>
+      );
+    } else if (this.props.dish != null) {
       return (
         <div className="container">
           <div className="row">

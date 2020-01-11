@@ -14,9 +14,6 @@ export const ConfigureStore = () => {
       leaders: Leaders,
       comments: Comments
     }),
-    // to make the store (state and action ) available for
-    // the thunk and logger for modification and logging
-    // hanldy middle ware actions
     applyMiddleware(thunk, logger)
   );
 
