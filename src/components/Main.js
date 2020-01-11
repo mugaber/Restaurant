@@ -1,5 +1,6 @@
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import { addComment, fetchDishes } from "../redux/ActionCreators";
+import { actions } from "react-redux-form";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import DishDetail from "./DishDetail";
@@ -15,15 +16,17 @@ const mapDispatchToProps = dispatch => ({
   addComment: (dishId, rating, author, comment) => {
     dispatch(addComment(dishId, rating, author, comment));
   },
-  // fetchDishes is using thunk to act as a middle ware and now it
-  // will be available as a props to the main component
+
   fetchDishes: () => {
     dispatch(fetchDishes());
+  },
+
+  // to make use of the form through actions from redux form
+  // actions have access to the form from the sotre
+  resetFeedbackForm: () => {
+    dispatch(actions.reset("feedback"));
   }
 });
-
-// now dishes state will be availabe as an object with three properties
-// dishes, is loading and error message
 
 const mapStoreToProps = state => {
   return {
@@ -35,9 +38,6 @@ const mapStoreToProps = state => {
 };
 
 class Main extends Component {
-  //
-  // add a life cyle to fetch the dishes when ever the main component
-  // will be mounsted to the UI view
   componentDidMount() {
     this.props.fetchDishes();
   }
@@ -46,7 +46,6 @@ class Main extends Component {
     const HomePage = () => {
       return (
         <Home
-          // dishes will have a property dishes that have the dishes
           dish={this.props.dishes.dishes.filter(dish => dish.featured)[0]}
           dishesLoading={this.props.dishes.loading}
           dishesErrMess={this.props.dishes.errMess}
@@ -90,7 +89,7 @@ class Main extends Component {
           />
           <Route path="/menu/:dishId" component={DishWithId} />
           <Route exact path="/contactus">
-            <Contact />
+            <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
           </Route>
           <Redirect to="/home" />
         </Switch>

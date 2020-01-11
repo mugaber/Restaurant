@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { Control, Form, Errors, actions } from "react-redux-form";
 import {
   BreadcrumbItem,
   Breadcrumb,
@@ -23,9 +23,12 @@ class Contact extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // now resetFeedbackForm is available as a props
+  // we can make use of that in here to reset the form
   handleSubmit(values) {
     console.log("Current state is " + JSON.stringify(values));
     alert(JSON.stringify(values));
+    this.props.resetFeedbackForm();
   }
 
   render() {
@@ -96,8 +99,12 @@ class Contact extends Component {
           </div>
 
           <div className="col-12 col-md-9">
-            {/* to make use of redux form */}
-            <LocalForm onSubmit={values => this.handleSubmit(values)}>
+            {/* to make use of the Form we have to name the model as 
+              we named it in the redux store  */}
+            <Form
+              model="feedback"
+              onSubmit={values => this.handleSubmit(values)}
+            >
               <Row className="form-group">
                 <Label htmlFor="firstname" md={2}>
                   First Name
@@ -263,7 +270,7 @@ class Contact extends Component {
                   </Button>
                 </Col>
               </Row>
-            </LocalForm>
+            </Form>
           </div>
         </div>
       </div>

@@ -11,16 +11,6 @@ export const addComment = (dishId, rating, author, comment) => ({
   }
 });
 
-// now we will create some actions for dishes (loading, failed and ADD)
-// these actions will be used by dishes reducer and applyed through redux thunk
-
-// the actions will be available for the specific reducer and will use the action
-// extract infomation and operations to be berformed add more if necessary 
-// the return something based on that 
-
-// fetchDishes uses thunk to interfere in between to do some action 
-// as a middle ware simulating fetching data from a server
-
 export const fetchDishes = () => dispatch => {
   dispatch(dishesLoading(true));
 

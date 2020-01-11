@@ -170,10 +170,6 @@ class RenderComments extends Component {
   }
 }
 
-// to update the dishDetail component to make use of the loading
-// and error message that have been sent from the main component
-// and render different views based on the condition of the state
-
 class DishDetail extends Component {
   render() {
     if (this.props.loading) {

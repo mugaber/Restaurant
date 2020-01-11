@@ -9,9 +9,6 @@ import {
   CardSubtitle
 } from "reactstrap";
 
-// update main component to make use of the update in dishes
-// using loading and error message to render different UI
-
 function RenderCard({ item, loading, errMess }) {
   if (loading) {
     return <Loading />;
