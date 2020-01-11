@@ -156,7 +156,9 @@ class RenderComments extends Component {
       return (
         <div>
           <h4>Comments</h4>
-          <ul className="list-unstyled">{this.renderComment(comments)}</ul>
+          <ul className="list-unstyled">
+            {this.renderComment(comments)}
+          </ul>
           <CommentForm
             addComment={this.props.addComment}
             dishId={this.props.dishId}
