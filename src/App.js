@@ -10,7 +10,6 @@ const store = ConfigureStore();
 class App extends Component {
   render() {
     return (
-      // to make use of redux
       <Provider store={store}>
         <BrowserRouter>
           <div className="App">

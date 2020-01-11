@@ -1,6 +1,5 @@
 import * as ActionTypes from "./ActionTypes";
 import { baseUrl } from "../shared/baseUrl";
-import { DISHES } from "../shared/dishes";
 
 export const addComment = (dishId, rating, author, comment) => ({
   type: ActionTypes.ADD_COMMENT,
@@ -12,16 +11,29 @@ export const addComment = (dishId, rating, author, comment) => ({
   }
 });
 
+// COMMENTS ACTIONS
+
+export const fetchComments = () => dispatch => {
+  return fetch(baseUrl + "comments")
+    .then(response => response.json())
+    .then(comments => dispatch(addDishes(comments)));
+};
+
+export const commentsFailed = errmess => ({
+  type: ActionTypes.COMMENTS_FAILED,
+  payload: errmess
+});
+
+export const addcomments = comments => ({
+  type: ActionTypes.ADD_COMMENTS,
+  payload: comments
+});
+
+
+// DISHES ACTIONS
+
 export const fetchDishes = () => dispatch => {
   dispatch(dishesLoading(true));
-
-  // to fetch data from the json server and serve up the dishes
-  // we have to include the url to the fetch API and make up
-  // the promise by using then and handle the error by catch
-  // the first then will transfer the response to a json object
-  // then the json object get passed to the second then to be
-  // passed to the addDishes function that the dispatch will
-  // make it available to the redux store
 
   return fetch(baseUrl + "dishes")
     .then(response => response.json())
@@ -41,6 +53,8 @@ export const addDishes = dishes => ({
   type: ActionTypes.ADD_DISHES,
   payload: dishes
 });
+
+// PROMOSTIONS ACTIONS
 
 export const fetchPromos = () => dispatch => {
   dispatch(promosLoading());
@@ -63,3 +77,4 @@ export const addPromos = promos => ({
   type: ActionTypes.ADD_PROMOS,
   payload: promos
 });
+
