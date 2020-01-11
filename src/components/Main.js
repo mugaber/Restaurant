@@ -21,8 +21,6 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchDishes());
   },
 
-  // to make use of the form through actions from redux form
-  // actions have access to the form from the sotre
   resetFeedbackForm: () => {
     dispatch(actions.reset("feedback"));
   }

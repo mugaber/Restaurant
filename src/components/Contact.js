@@ -23,8 +23,6 @@ class Contact extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  // now resetFeedbackForm is available as a props
-  // we can make use of that in here to reset the form
   handleSubmit(values) {
     console.log("Current state is " + JSON.stringify(values));
     alert(JSON.stringify(values));
@@ -99,8 +97,6 @@ class Contact extends Component {
           </div>
 
           <div className="col-12 col-md-9">
-            {/* to make use of the Form we have to name the model as 
-              we named it in the redux store  */}
             <Form
               model="feedback"
               onSubmit={values => this.handleSubmit(values)}

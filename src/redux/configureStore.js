@@ -15,8 +15,6 @@ export const ConfigureStore = () => {
       promotions: Promotions,
       leaders: Leaders,
       comments: Comments,
-      // to make use of the full power of react redux forms 
-      // to save the state of the form in the store
       ...createForms({
         feedback: InitialFeedback
       })
