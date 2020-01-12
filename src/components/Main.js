@@ -16,7 +16,8 @@ import {
   fetchDishes,
   fetchComments,
   fetchPromos,
-  fetchLeaders
+  fetchLeaders,
+  postFeedback
 } from "../redux/ActionCreators";
 
 //
@@ -45,6 +46,10 @@ const mapDispatchToProps = dispatch => ({
 
   fetchLeaders: () => {
     dispatch(fetchLeaders());
+  },
+
+  postFeedback: () => {
+    dispatch(postFeedback());
   },
 
   resetFeedbackForm: () => {
@@ -139,7 +144,10 @@ class Main extends Component {
               />
               <Route path="/menu/:dishId" component={DishWithId} />
               <Route exact path="/contactus">
-                <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+                <Contact
+                  resetFeedbackForm={this.props.resetFeedbackForm}
+                  postFeedback={this.props.postFeedback}
+                />
               </Route>
               <Redirect to="/home" />
             </Switch>
