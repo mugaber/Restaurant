@@ -1,3 +1,4 @@
+import { baseUrl } from "../shared/baseUrl";
 import { Link } from "react-router-dom";
 import { Loading } from "./Loading";
 import React from "react";
@@ -14,7 +15,8 @@ function RenderMenuItem({ dish }) {
   return (
     <Card>
       <Link to={`/menu/${dish.id}`}>
-        <CardImg width="100%" src={dish.image} alt={dish.name} />
+        {/* update the src to query the image from the server */}
+        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
         <CardImgOverlay>
           <CardTitle>{dish.name}</CardTitle>
         </CardImgOverlay>
@@ -22,9 +24,6 @@ function RenderMenuItem({ dish }) {
     </Card>
   );
 }
-
-// updating the menu compoennt to make use of loading the dishes and
-// error message if there is any the whole view will be conditional
 
 function Menu(props) {
   const menu = props.dishes.dishes.map(dish => {

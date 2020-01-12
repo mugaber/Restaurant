@@ -1,4 +1,5 @@
 import { Control, LocalForm, Errors } from "react-redux-form";
+import { baseUrl } from "../shared/baseUrl";
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Loading } from "./Loading";
@@ -123,7 +124,7 @@ class CommentForm extends Component {
 function RenderDish({ dish }) {
   return (
     <Card>
-      <CardImg top src={dish.image} alt={dish.name} />
+      <CardImg top src={baseUrl + dish.image} alt={dish.name} />
       <CardBody>
         <CardTitle>{dish.name}</CardTitle>
         <CardText>{dish.description}</CardText>

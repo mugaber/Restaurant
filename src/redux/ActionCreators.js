@@ -16,7 +16,7 @@ export const addComment = (dishId, rating, author, comment) => ({
 export const fetchComments = () => dispatch => {
   return fetch(baseUrl + "comments")
     .then(response => response.json())
-    .then(comments => dispatch(addDishes(comments)));
+    .then(comments => dispatch(addComments(comments)));
 };
 
 export const commentsFailed = errmess => ({
@@ -24,11 +24,10 @@ export const commentsFailed = errmess => ({
   payload: errmess
 });
 
-export const addcomments = comments => ({
+export const addComments = comments => ({
   type: ActionTypes.ADD_COMMENTS,
   payload: comments
 });
-
 
 // DISHES ACTIONS
 
@@ -61,7 +60,7 @@ export const fetchPromos = () => dispatch => {
 
   return fetch(baseUrl + "promotions")
     .then(response => response.json())
-    .then(promos => dispatch(addDishes(promos)));
+    .then(promos => dispatch(addPromos(promos)));
 };
 
 export const promosLoading = () => ({
@@ -77,4 +76,3 @@ export const addPromos = promos => ({
   type: ActionTypes.ADD_PROMOS,
   payload: promos
 });
-

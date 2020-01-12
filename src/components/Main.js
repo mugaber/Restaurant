@@ -1,5 +1,4 @@
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import { addComment, fetchDishes } from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 import React, { Component } from "react";
 import { connect } from "react-redux";
@@ -10,6 +9,14 @@ import Footer from "./Footer";
 import Menu from "./Menu.js";
 import About from "./About";
 import Home from "./Home";
+import {
+  addComment,
+  fetchDishes,
+  fetchComments,
+  fetchPromos
+} from "../redux/ActionCreators";
+
+//
 
 const mapDispatchToProps = dispatch => ({
   //
@@ -21,10 +28,22 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchDishes());
   },
 
+  // to make use of the new fetching actions on comments and promotions
+
+  fetchComments: () => {
+    dispatch(fetchComments());
+  },
+
+  fetchPromos: () => {
+    dispatch(fetchPromos());
+  },
+
   resetFeedbackForm: () => {
     dispatch(actions.reset("feedback"));
   }
 });
+
+//
 
 const mapStoreToProps = state => {
   return {
@@ -35,9 +54,14 @@ const mapStoreToProps = state => {
   };
 };
 
+//
+
 class Main extends Component {
   componentDidMount() {
+    // to fetch the data of the state once the component mounted
     this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
   }
 
   render() {
@@ -47,7 +71,12 @@ class Main extends Component {
           dish={this.props.dishes.dishes.filter(dish => dish.featured)[0]}
           dishesLoading={this.props.dishes.loading}
           dishesErrMess={this.props.dishes.errMess}
-          promotion={this.props.promotions.filter(promo => promo.featured)[0]}
+          // update the promotions state to reflect the changes
+          promotion={
+            this.props.promotions.promotions.filter(promo => promo.featured)[0]
+          }
+          promoLoading={this.props.promotions.loading}
+          promoErrMess={this.props.promotions.errMess}
           leader={this.props.leaders.filter(leader => leader.featured)[0]}
         />
       );
@@ -63,9 +92,10 @@ class Main extends Component {
           }
           loading={this.props.dishes.loading}
           errMess={this.props.dishes.errMess}
-          comments={this.props.comments.filter(
+          comments={this.props.comments.comments.filter(
             comment => comment.dishId === parseInt(match.params.dishId, 10)
           )}
+          commentsErrMess={this.props.comments.errMess}
           addComment={this.props.addComment}
         />
       );

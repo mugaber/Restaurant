@@ -1,3 +1,4 @@
+import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./Loading";
 import React from "react";
 import {
@@ -17,7 +18,7 @@ function RenderCard({ item, loading, errMess }) {
   } else {
     return (
       <Card>
-        <CardImg src={item.image} alt={item.name} />
+        <CardImg src={baseUrl + item.image} alt={item.name} />
         <CardBody>
           <CardTitle>{item.name}</CardTitle>
           {item.designation ? (
@@ -42,7 +43,12 @@ function Home(props) {
           />
         </div>
         <div className="col-12 col-md m-1">
-          <RenderCard item={props.promotion} />
+          {/* updated promo card to make use of the loading and err mess */}
+          <RenderCard
+            item={props.promotion}
+            loading={props.promoLoading}
+            errMess={props.promoErrMess}
+          />
         </div>
         <div className="col-12 col-md m-1">
           <RenderCard item={props.leader} />
