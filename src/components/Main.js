@@ -11,6 +11,7 @@ import About from "./About";
 import Home from "./Home";
 import {
   addComment,
+  postComment,
   fetchDishes,
   fetchComments,
   fetchPromos
@@ -20,15 +21,17 @@ import {
 
 const mapDispatchToProps = dispatch => ({
   //
-  addComment: (dishId, rating, author, comment) => {
-    dispatch(addComment(dishId, rating, author, comment));
+  addComment: comment => {
+    dispatch(addComment(comment));
+  },
+
+  postComment: (dishId, rating, author, comment) => {
+    dispatch(postComment(dishId, rating, author, comment));
   },
 
   fetchDishes: () => {
     dispatch(fetchDishes());
   },
-
-  // to make use of the new fetching actions on comments and promotions
 
   fetchComments: () => {
     dispatch(fetchComments());
@@ -96,7 +99,8 @@ class Main extends Component {
             comment => comment.dishId === parseInt(match.params.dishId, 10)
           )}
           commentsErrMess={this.props.comments.errMess}
-          addComment={this.props.addComment}
+          // addComment={this.props.addComment}
+          postComment={this.props.postComment}
         />
       );
     };
