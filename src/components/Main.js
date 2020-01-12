@@ -15,7 +15,8 @@ import {
   postComment,
   fetchDishes,
   fetchComments,
-  fetchPromos
+  fetchPromos,
+  fetchLeaders
 } from "../redux/ActionCreators";
 
 //
@@ -42,6 +43,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchPromos());
   },
 
+  fetchLeaders: () => {
+    dispatch(fetchLeaders());
+  },
+
   resetFeedbackForm: () => {
     dispatch(actions.reset("feedback"));
   }
@@ -65,6 +70,7 @@ class Main extends Component {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
 
   render() {
@@ -74,13 +80,16 @@ class Main extends Component {
           dish={this.props.dishes.dishes.filter(dish => dish.featured)[0]}
           dishesLoading={this.props.dishes.loading}
           dishesErrMess={this.props.dishes.errMess}
-          // update the promotions state to reflect the changes
           promotion={
             this.props.promotions.promotions.filter(promo => promo.featured)[0]
           }
           promoLoading={this.props.promotions.loading}
           promoErrMess={this.props.promotions.errMess}
-          leader={this.props.leaders.filter(leader => leader.featured)[0]}
+          leader={
+            this.props.leaders.leaders.filter(leader => leader.featured)[0]
+          }
+          leaderLoading={this.props.leaders.loading}
+          leaderErrMess={this.props.leaders.errMess}
         />
       );
     };
@@ -104,9 +113,6 @@ class Main extends Component {
       );
     };
 
-    // to make use of react transition wrap the whole switch in
-    // the transiton group and apply the css transition
-
     return (
       <div>
         <Header />
@@ -120,7 +126,11 @@ class Main extends Component {
             <Switch location={this.props.location}>
               <Route path="/home" component={HomePage} />
               <Route path="/aboutus">
-                <About leaders={this.props.leaders} />
+                <About
+                  leaders={this.props.leaders.leaders}
+                  leadersLoading={this.props.leaders.loading}
+                  leadersErrMess={this.props.leaders.errMess}
+                />
               </Route>
               <Route
                 exact

@@ -1,3 +1,6 @@
+import { baseUrl } from "../shared/baseUrl";
+import { Link } from "react-router-dom";
+import { Loading } from "./Loading";
 import React from "react";
 import {
   Breadcrumb,
@@ -7,26 +10,49 @@ import {
   CardHeader,
   Media
 } from "reactstrap";
-import { Link } from "react-router-dom";
 
-function RenderLeader({ leader }) {
-  return (
-    <Media tag="li">
-      <Media left className="mr-5">
-        <Media object src={leader.image} alt={leader.name} />
+function RenderLeader({ leader, loading, error }) {
+  if (loading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
+        </div>
+      </div>
+    );
+  } else if (error) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h2>{error}</h2>
+        </div>
+      </div>
+    );
+  } else {
+    return (
+      <Media tag="li">
+        <Media left className="mr-5">
+          <Media object src={baseUrl + leader.image} alt={leader.name} />
+        </Media>
+        <Media body className="mb-5">
+          <Media heading>{leader.name}</Media>
+          <p>{leader.designation}</p>
+          <p>{leader.description}</p>
+        </Media>
       </Media>
-      <Media body className="mb-5">
-        <Media heading>{leader.name}</Media>
-        <p>{leader.designation}</p> 
-        <p>{leader.description}</p>
-      </Media>
-    </Media>
-  );
+    );
+  }
 }
 
 function About(props) {
   const leaders = props.leaders.map(leader => {
-    return <RenderLeader leader={leader} />;
+    return (
+      <RenderLeader
+        leader={leader}
+        loading={props.leadersLoading}
+        error={props.leadersErrMess}
+      />
+    );
   });
 
   return (

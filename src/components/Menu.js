@@ -15,7 +15,6 @@ function RenderMenuItem({ dish }) {
   return (
     <Card>
       <Link to={`/menu/${dish.id}`}>
-        {/* update the src to query the image from the server */}
         <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
         <CardImgOverlay>
           <CardTitle>{dish.name}</CardTitle>

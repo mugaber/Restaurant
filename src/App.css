@@ -33,6 +33,8 @@ address {
 }
 
 /* npm install react-transition-group */
+/* npm install react-animation-components */
+/* npm install prop-types */
 
 .page-enter {
   opacity: 0.01;
